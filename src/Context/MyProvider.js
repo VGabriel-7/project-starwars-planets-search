@@ -24,18 +24,20 @@ export default function MyProvider({ children }) {
   }, [filterByName]);
 
   const clickToFilter = () => {
-    const filter = () => {
+    const filter = planets.filter((filterComp) => {
+      let planetsFiltred;
       if (comparison === 'maior que') {
-        return planets.filter((filterComp) => (+filterComp[column]) > (+value));
+        planetsFiltred = (+filterComp[column]) > (+value);
       }
       if (comparison === 'menor que') {
-        return planets.filter((filterComp) => (+filterComp[column]) < (+value));
+        planetsFiltred = (+filterComp[column]) < (+value);
       }
       if (comparison === 'igual a') {
-        return planets.filter((filterComp) => (+filterComp[column]) === (+value));
+        planetsFiltred = (+filterComp[column]) === (+value);
       }
-    };
-    setfilteredPlanets(filter());
+      return planetsFiltred;
+    });
+    setfilteredPlanets(filter);
   };
 
   return (

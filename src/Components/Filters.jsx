@@ -5,7 +5,7 @@ export default function Filters() {
   const {
     setFilterByName, setColumn,
     setComparison, setValue,
-    clickToFilter, value } = useContext(MyContext);
+    clickToFilter, value, column, comparison } = useContext(MyContext);
 
   return (
     <>
@@ -17,6 +17,7 @@ export default function Filters() {
       <select
         data-testid="column-filter"
         onClick={ ({ target: { value: columnValue } }) => setColumn(columnValue) }
+        value={ column }
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
@@ -29,6 +30,7 @@ export default function Filters() {
         onClick={ ({ target: { value: comparisonValue } }) => (
           setComparison(comparisonValue)
         ) }
+        value={ comparison }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
