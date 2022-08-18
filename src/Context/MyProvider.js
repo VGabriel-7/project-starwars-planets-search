@@ -4,7 +4,11 @@ import MyContext from './MyContext';
 
 export default function MyProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filteredPlanets, setfilteredPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -15,9 +19,24 @@ export default function MyProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  const filteredPlanets = filterByName.length > 0
-    ? planets.filter(({ name }) => name.includes(filterByName))
-    : [];
+  useEffect(() => {
+    setfilteredPlanets(planets.filter(({ name }) => name.includes(filterByName)));
+  }, [filterByName]);
+
+  const clickToFilter = () => {
+    const filter = () => {
+      if (comparison === 'maior que') {
+        return planets.filter((filterComp) => (+filterComp[column]) > (+value));
+      }
+      if (comparison === 'menor que') {
+        return planets.filter((filterComp) => (+filterComp[column]) < (+value));
+      }
+      if (comparison === 'igual a') {
+        return planets.filter((filterComp) => (+filterComp[column]) === (+value));
+      }
+    };
+    setfilteredPlanets(filter());
+  };
 
   return (
     <MyContext.Provider
@@ -25,7 +44,15 @@ export default function MyProvider({ children }) {
         planets,
         filterByName,
         setFilterByName,
-        filteredPlanets } }
+        filteredPlanets,
+        setColumn,
+        setComparison,
+        setValue,
+        column,
+        comparison,
+        value,
+        setfilteredPlanets,
+        clickToFilter } }
     >
       {children}
     </MyContext.Provider>
