@@ -15,6 +15,7 @@ export default function MyProvider({ children }) {
       const resultAPI = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then((promise) => promise.json());
       const planetsAPI = resultAPI.results.filter((obj) => delete obj.residents);
       setPlanets(planetsAPI);
+      setfilteredPlanets(planetsAPI);
     };
     fetchPlanets();
   }, []);
@@ -24,7 +25,7 @@ export default function MyProvider({ children }) {
   }, [filterByName]);
 
   const clickToFilter = () => {
-    const filter = planets.filter((filterComp) => {
+    const filter = filteredPlanets.filter((filterComp) => {
       let planetsFiltred;
       if (comparison === 'maior que') {
         planetsFiltred = (+filterComp[column]) > (+value);
