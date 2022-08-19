@@ -7,11 +7,14 @@ export default function Filters() {
     setComparison, setValue,
     clickToFilter, value } = useContext(MyContext);
 
+  console.log(setFilterByName);
+
   return (
     <>
       <input
         data-testid="name-filter"
         type="text"
+        placeholder="Digite aqui..."
         onChange={ ({ target: { value: nameValue } }) => setFilterByName(nameValue) }
       />
       <select
